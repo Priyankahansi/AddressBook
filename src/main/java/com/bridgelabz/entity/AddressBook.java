@@ -1,5 +1,7 @@
 package com.bridgelabz.entity;
 
+import com.bridgelabz.DTO.AddressBookDto;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,6 +30,15 @@ public class AddressBook {
         this.city = city;
         this.zip = zip;
         this.phone = phone;
+    }
+
+    public AddressBook(AddressBookDto addressBookDto) {
+        this.fullName = addressBookDto.getFullName();
+        this.address = addressBookDto.getAddress();
+        this.city = addressBookDto.getCity();
+        this.state = addressBookDto.getState();
+        this.zip = addressBookDto.getZip();
+        this.phone = addressBookDto.getPhone();
     }
 
     public int getId() {

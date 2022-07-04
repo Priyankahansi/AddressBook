@@ -1,5 +1,6 @@
 package com.bridgelabz.service;
 
+import com.bridgelabz.DTO.AddressBookDto;
 import com.bridgelabz.Repository.AddressBookRepository;
 import com.bridgelabz.entity.AddressBook;
 import org.apache.tomcat.jni.Address;
@@ -22,7 +23,8 @@ public class AddressBookService implements IAddressBookService {
     }
 
     @Override
-    public String AddAddressBook(AddressBook addressBook) {
+    public String AddAddressBook(AddressBookDto addressBookDto) {
+        AddressBook addressBook=new AddressBook(addressBookDto);
         repo.save(addressBook);
         return addressBook.toString();
     }
@@ -46,15 +48,15 @@ public class AddressBookService implements IAddressBookService {
     }
 
     @Override
-    public AddressBook updateContact(int getId, AddressBook addressBook) {
+    public AddressBook updateContact(int getId, AddressBookDto addressBookDto) {
         Optional<AddressBook> newContact = repo.findById(getId);
         if (newContact.isPresent()) {
-            newContact.get().setFullName(addressBook.getFullName());
-            newContact.get().setAddress(addressBook.getAddress());
-            newContact.get().setCity(addressBook.getCity());
-            newContact.get().setState(addressBook.getState());
-            newContact.get().setZip(addressBook.getZip());
-            newContact.get().setPhone(addressBook.getPhone());
+            newContact.get().setFullName(addressBookDto.getFullName());
+            newContact.get().setAddress(addressBookDto.getAddress());
+            newContact.get().setCity(addressBookDto.getCity());
+            newContact.get().setState(addressBookDto.getState());
+            newContact.get().setZip(addressBookDto.getZip());
+            newContact.get().setPhone(addressBookDto.getPhone());
             repo.save(newContact.get());
             return newContact.get();
         } else {

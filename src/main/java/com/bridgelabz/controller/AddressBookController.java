@@ -1,50 +1,61 @@
 package com.bridgelabz.controller;
 
+import com.bridgelabz.DTO.AddressBookDto;
+import com.bridgelabz.DTO.ResponseDto;
 import com.bridgelabz.entity.AddressBook;
 import com.bridgelabz.service.IAddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+ @RestController
  @RequestMapping("/home")
  public class AddressBookController {
-    @Autowired
-    IAddressBookService service;
+     @Autowired
+     IAddressBookService service;
 
-    @GetMapping("/hello")
-    public String hello(){
-       String msg=service.getMessage();
-       return msg;
-   }
-    @PostMapping("/AddContact")
-    public String AddContact(@RequestBody AddressBook addressBook){
-        String AddContact=service.AddAddressBook(addressBook);
-        return AddContact;
-    }
-     @GetMapping("/getContact/{getId}")
-     public AddressBook getContact(@PathVariable int getId)
-     {
-         AddressBook contactId=service.getContactId(getId);
-         return contactId;
+     @GetMapping("/hello")
+     public String hello() {
+         String msg = service.getMessage();
+         return msg;
      }
 
-    @GetMapping("/getContacts")
-    public List<AddressBook> getContacts()
-    {
-        List<AddressBook> contacts=service.getListOfContacts();
-        return contacts;
-    }
+     @PostMapping("/AddContact")
+     public ResponseEntity<ResponseDto> AddContact(@RequestBody AddressBookDto addressBookDto) {
+         String AddContact = service.AddAddressBook(addressBookDto);
+         ResponseDto response = new ResponseDto("Contact added Successfully", AddContact);
+         return new ResponseEntity<>(response, HttpStatus.OK);
+     }
 
-    @DeleteMapping("/delete")
-    public String deleteContact(@RequestParam int id){
-        service.deleteContact(id);
-        return "Deleted....!";
-    }
-    @PutMapping("/updateContact/{getId}")
-    public AddressBook updateContact(@PathVariable int getId,@RequestBody AddressBook  addressBook){
-        AddressBook updateContact=service.updateContact(getId,addressBook);
-        return updateContact;
-    }
-}
+     @GetMapping("/getContact/{getId}")
+     public ResponseEntity<ResponseDto> getContact(@PathVariable int getId) {
+         AddressBook contactId = service.getContactId(getId);
+         ResponseDto response = new ResponseDto("Got Contact by Successfully", contactId);
+         return new ResponseEntity<>(response, HttpStatus.OK);
+     }
+
+     @GetMapping("/getContacts")
+     public ResponseEntity<ResponseDto> getContacts() {
+         List<AddressBook> contacts = service.getListOfContacts();
+         ResponseDto response = new ResponseDto("Got List Contacts Successfully", contacts);
+         return new ResponseEntity<>(response, HttpStatus.OK);
+     }
+
+     @DeleteMapping("/delete")
+     public ResponseEntity<ResponseDto> deleteContact(@RequestParam int id) {
+         service.deleteContact(id);
+         ResponseDto response = new ResponseDto("deleted contact successfully", id);
+         return new ResponseEntity<>(response, HttpStatus.OK);
+     }
+
+     @PutMapping("/updateContact/{getId}")
+     public ResponseEntity<ResponseDto> updateContact(@PathVariable int getId, @RequestBody AddressBookDto addressBookDto) {
+
+         AddressBook updateContact = service.updateContact(getId, addressBookDto);
+         ResponseDto response = new ResponseDto("updated contact successfully", updateContact);
+         return new ResponseEntity<>(response, HttpStatus.OK);
+     }
+ }
