@@ -1,72 +1,35 @@
 package com.bridgelabz.DTO;
 
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+@Data
+@NoArgsConstructor
+@ToString
 public class AddressBookDto {
+    @Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$",message = "Inavlid name...!")
     private String fullName;
+
+    @NotNull(message = "Address should not be null")
     private String address;
+
+    @NotNull(message = "State should not be null")
     private String state;
+
+    @NotNull(message = "City should not be null")
     private String city;
+
+    @NotBlank(message = "Zip cannot be blank")
     private String zip;
+
+    @NotNull(message = "Phone Number should not be null")
     private String phone;
 
-    public AddressBookDto() {
-    }
-
-    public AddressBookDto(String fullName, String address,
-                          String state, String city, String zip, String phone) {
-        this.fullName = fullName;
-        this.address = address;
-        this.state = state;
-        this.city = city;
-        this.zip = zip;
-        this.phone = phone;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+    private String email;
 }
